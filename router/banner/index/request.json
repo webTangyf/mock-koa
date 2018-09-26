@@ -1,0 +1,6 @@
+{
+  "type": "get",
+  "params": [
+    "@test"
+  ]
+}

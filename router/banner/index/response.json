@@ -1,0 +1,13 @@
+{
+  "list|1-1": [{
+    "id|+1": 1,
+    "name": {
+      "first": "@FIRST",
+      "middle": "@FIRST",
+      "last": "@LAST",
+      "full": "@first @middle @last"
+    },
+    "num|100-10000": 1,
+    "ramdom|123.10": 1
+  }]
+}
