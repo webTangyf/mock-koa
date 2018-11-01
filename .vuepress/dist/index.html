@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>mock-koa | mock-koa使用说明</title>
+    <meta name="description" content="帮组开发者进行mock数据的开发， 以及转发数据">
+    
+    
+    <link rel="preload" href="/assets/css/1.styles.d142bd6f.css" as="style"><link rel="preload" href="/assets/js/app.6646fc1a.js" as="script"><link rel="preload" href="/assets/js/0.a280c754.js" as="script">
+    <link rel="stylesheet" href="/assets/css/1.styles.d142bd6f.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div><a href="/" class="home-link router-link-exact-active router-link-active"><!----><span class="site-name">
+      mock-koa
+    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><!----></div></header><div class="sidebar-mask"></div><div class="sidebar"><!----><!----></div><div class="page"><div class="content"><h1 id="mock-koa使用说明"><a href="#mock-koa使用说明" aria-hidden="true" class="header-anchor">#</a> mock-koa使用说明</h1><h2 id="基本介绍"><a href="#基本介绍" aria-hidden="true" class="header-anchor">#</a> 基本介绍</h2><p>本项目集合了mockjs 以及 koa 完成了一个方便工程师快速进行mock数据的小工具, mockjs提供了假数据的基本<a href="http://mockjs.com/examples.html">api</a>, 而koa实现了服务器的一个快速搭建。为了保证项目的轻便快捷。不希望用户安装除node依赖意外的东西，比如说数据库等。使用静态文件来进行接口的配置化工作，对于开发工作者而言api也是相对简单易懂的。</p><h2 id="目录结构"><a href="#目录结构" aria-hidden="true" class="header-anchor">#</a> 目录结构</h2><pre><code>  '|-- mock-koa',                          总文件夹
+  '    |-- .gitignore', 
+  '    |-- README.md',
+  '    |-- config.js',                     mock-koa总配置项
+  '    |-- error.js',                      mock-koa统一错误配置项
+  '    |-- mock.js',                       mock-koa源码
+  '    |-- package.json',
+  '    |-- tool.js',                       js 工具库
+  '    |-- yarn.lock',
+  '    |-- .vuepress',                     文档配置
+  '    |   |-- config.js',
+  '    |-- router',                        接口静态文件
+  '    |   |-- api',
+  '    |       |-- doc',
+  '    |           |-- list',
+  '    |               |-- error.js',      接口: /api/doc/list 配置错误时的统一返回
+  '    |               |-- request.js',	   接口: /api/doc/list 请求配置
+  '    |               |-- response.js',   接口: /api/doc/list 响应配置
+  '    |-- template',
+  '        |-- error.js',                  error.js 生成模版
+  '        |-- request.js',                request.js 生成模版
+  '        |-- response.js',               response.js 生成模版
+  '
+</code></pre><div class="tip custom-block"><p class="custom-block-title">接口路径</p><p>接口路径统一由/router底下文件夹路径构成，如上则生成接口 /api/doc/list</p></div><h2 id="开发文档"><a href="#开发文档" aria-hidden="true" class="header-anchor">#</a> 开发文档</h2><h3 id="命令行"><a href="#命令行" aria-hidden="true" class="header-anchor">#</a> 命令行</h3><p>快速生成接口文件的命令</p><pre><code>node mock add api/xxx/xxx //您想要接口地址
+</code></pre><div class="warning custom-block"><p class="custom-block-title">警告</p><p>这里请不要写成绝对路径</p></div><p>启动服务</p><pre><code>node mock serve
+</code></pre><h3 id="总配置"><a href="#总配置" aria-hidden="true" class="header-anchor">#</a> 总配置</h3><h4 id="config-js"><a href="#config-js" aria-hidden="true" class="header-anchor">#</a> config.js</h4><ul><li>port 端口号
+<ul><li>默认： 4100</li></ul></li></ul><h4 id="error-js"><a href="#error-js" aria-hidden="true" class="header-anchor">#</a> error.js</h4><ul><li>paramsError 参数错误的返回对象<br>
+默认值：</li></ul><pre class="language-text"><code>{
+    retcode: '1111',
+    retmsg: '参数不完整'
+}
+</code></pre><ul><li>commonError 全局报错的返回对象<br>
+默认值：</li></ul><pre class="language-text"><code>{
+	retcode: '1111',
+	retmsg: '系统出错'
+}
+</code></pre><ul><li>responseError 解析错误的返回对象<br>
+默认值：</li></ul><pre class="language-text"><code>{
+	retcode: '1111',
+	retmsg: 'mock数据格式解析错误'
+}
+</code></pre><h3 id="接口配置"><a href="#接口配置" aria-hidden="true" class="header-anchor">#</a> 接口配置</h3><h4 id="request-js"><a href="#request-js" aria-hidden="true" class="header-anchor">#</a> request.js</h4><ul><li><p>type 请求类型<br>默认值：get<br> 参数类型: 字符串</p></li><li><p>params 请求参数列表 <br> 默认值：[] <br> 参数类型: 数组<br> 样例：</p></li></ul><pre class="language-text"><code>	params: [
+		&quot;@type&quot;,
+		version
+	]
+</code></pre><div class="tip custom-block"><p class="custom-block-title">小提示</p><p>当参数名称前加入@ 代表必传参数</p></div><ul><li>if 特殊请求判断列表 <br> 默认值：[] <br> 参数类型: 数组
+<ul><li>mockIf 用于判断参数统一性 目前只支持 字符型</li><li>mockType 数据合并类型 支持merge，cover两种 <br> 默认值：
+<ul><li>merge 合并响应</li><li>cover 覆盖响应</li></ul></li><li>mockReturn 响应内容 支持<a href="http://mockjs.com/examples.html">mockapi</a></li></ul></li></ul><p>完成if案例：</p><pre class="language-text"><code>if: [
+	{
+		mockIf: {
+			type: '1',
+		},
+		mockType: 'merge',
+		mockReturn : {
+			type: '1',
+		}
+	},
+	{
+		mockIf: {
+			type: '1',
+			version: '2'
+		},
+		mockType: 'cover',
+		mockReturn : {
+			type: '2',
+		}
+	},
+]
+
+</code></pre><div class="tip custom-block"><p class="custom-block-title">解释</p><p>看到以上案例， 首先当入参type为1时进行匹配，你会看到两个都是符合条件的，那么我们会完全符合mockIf条件并且条件数（注：指参数数量）更多的进行匹配</p></div><h4 id="response-js"><a href="#response-js" aria-hidden="true" class="header-anchor">#</a> response.js</h4><p>引入了mock.Random
+增强了可操作性，以及自由度
+只需要修改 return 下的JSON 就可以获得对应的参数</p><pre class="language-text"><code>var Random = require('mockjs').Random;
+
+var response = function () {
+  return {
+    returnCode: &quot;0000&quot;,
+    returnMsg: &quot;成功&quot;,
+    email: '@date()'
+  };
+}
+
+</code></pre><div class="tip custom-block"><p class="custom-block-title">小贴士</p><p><a href="http://mockjs.com/examples.html">点击这里可以查看更多MockApi</a></p></div><h4 id="error-js-2"><a href="#error-js-2" aria-hidden="true" class="header-anchor">#</a> error.js</h4><ul><li>该接口报错时的返回，针对response文件配置出错</li></ul><p>默认值：</p><pre class="language-text"><code>{
+  returnCode: &quot;1111&quot;,
+  returnMsg: &quot;报错了&quot;
+}
+</code></pre></div><!----><!----></div></div></div>
+    <script src="/assets/js/0.a280c754.js" defer></script><script src="/assets/js/app.6646fc1a.js" defer></script>
+  </body>
+</html>
