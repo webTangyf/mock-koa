@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+</head>
+<body>
+	<form id="form" method="POST" target="targetIframe">
+		<input type="hidden" name="method" value="login" />
+		<input type="hidden" name="isneedmoulds" value="0" />
+		<input type="hidden" name="webclient" value="1" />
+		<input id="loginid" type="hidden" name="loginid"/>
+		<input id="password" type="hidden" name="password"/>
+	</form>
+	<iframe id="request" name="targetIframe"></iframe>
+	<script>
+		function isJsonString(str) {
+			try {
+				JSON.parse(str)
+				return true
+			} catch (err) {
+				return false
+			}
+		}
+
+		var psdDom = document.getElementById('password');
+		var loginDom = document.getElementById('loginid');
+
+		loginDom.value = 'huxiaojie';
+		psdDom.value = '123123';
+
+		var form = document.getElementById('form');
+		var iframeDom = document.getElementById('request');
+		// form.action = 'http://172.18.3.225:89/client.do'
+		form.action = '/api/fundlist'
+		iframeDom.onload = function () {
+			console.log(2)
+			if (!iframeDom.contentDocument) {
+				alert('当前登陆请求跨域');
+				return;
+			}
+			var pre = iframeDom.contentDocument.body.getElementsByTagName('pre');
+			var text = pre[0].innerText || pre[0].innerHTML;
+			if (!text) {
+				alert('请求体返回为空');
+				return;
+			}
+			if (!isJsonString(text)) {
+				alert('无法处理返回数据源');
+				return;
+			}
+			var data = JSON.parse(text);
+			if (data.error) {
+				alert('接口错误');
+				return;
+			}
+			console.log(data)
+			// window.location.href = '/home.do';
+		}
+		console.log(1)
+		form.submit()
+	</script>
+</body>
+</html>
